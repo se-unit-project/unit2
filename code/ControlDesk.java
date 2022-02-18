@@ -71,9 +71,9 @@ public class ControlDesk extends Observable implements Runnable {
 	 *
 	 */
 	public void assignLane() {
-		Iterator it = lanes.iterator();
-		while (it.hasNext() && partyQueue.hasMoreElements()) {
-			Lane curLane = (Lane) it.next();
+		Iterator laneIterator = lanes.iterator();
+		while (laneIterator.hasNext() && partyQueue.hasMoreElements()) {
+			Lane curLane = (Lane) laneIterator.next();
 
 			if (curLane.isPartyAssigned() == false) {
 				System.out.println("ok... assigning this party");
