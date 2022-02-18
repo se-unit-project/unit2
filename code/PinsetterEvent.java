@@ -2,7 +2,7 @@
 
 public class PinsetterEvent {
 
-	public static final int NUMBER_OF_PINS = 9;
+	public static final int NUMBER_OF_PINS = 10;
 	private boolean[] pinsStillStanding;
 	private boolean foulCommited;
 	private int throwNumber;
@@ -17,7 +17,7 @@ public class PinsetterEvent {
 	 */
 	public PinsetterEvent(boolean[] ps, boolean foul, int tn, int pinsDownThisThrow) {
 		pinsStillStanding = new boolean[10];
-		for (int i = 0; i <= NUMBER_OF_PINS; i++) pinsStillStanding[i] = ps[i];
+		for (int i = 0; i < NUMBER_OF_PINS; i++) pinsStillStanding[i] = ps[i];
 		foulCommited = foul;
 		throwNumber = tn;
 		this.pinsDownThisThrow = pinsDownThisThrow;
@@ -47,7 +47,7 @@ public class PinsetterEvent {
 	 */
 	public int totalPinsDown() {
 		int count = 0;
-		for (int i = 0; i <= NUMBER_OF_PINS; i++) {
+		for (int i = 0; i < NUMBER_OF_PINS; i++) {
 			if (pinKnockedDown(i)) count++;
 		}
 		return count;

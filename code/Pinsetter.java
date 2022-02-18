@@ -6,11 +6,11 @@
  */
 
 import java.util.*;
-import java.lang.Boolean;
 
 public class Pinsetter extends Observable {
 
-	private Random rnd;
+	public static final int NUMBER_OF_PINS = 10;
+	private Random random;
 	private boolean foul;
 	private int throwNumber;
 	private boolean[] pins; 
@@ -47,8 +47,8 @@ public class Pinsetter extends Observable {
 	 * @return Pinsetter object
 	 */
 	public Pinsetter() {
-		pins = new boolean[10];
-		rnd = new Random();
+		pins = new boolean[NUMBER_OF_PINS];
+		random = new Random();
 		foul = false;
 		reset();
 	}
@@ -63,19 +63,14 @@ public class Pinsetter extends Observable {
 	public void ballThrown() {	// simulated event of ball hits sensor
 		int count = 0;
 		foul = false;
-		double skill = rnd.nextDouble();
-		for (int i=0; i <= 9; i++) {
+		double skill = random.nextDouble();
+		for (int i=0; i < NUMBER_OF_PINS; i++) {
 			if (pins[i]) {
-				double pinluck = rnd.nextDouble();
-				if (pinluck <= .04){ 
-					foul = true;
-				}
-				if ( ((skill + pinluck)/2.0 * 1.2) > .5 ){
-					pins[i] = false;
-				} 
-				if (!pins[i]) {		// this pin just knocked down
-					count++;
-				}
+				double pinluck = random.nextDouble();
+				if (pinluck <= .04) foul = true;
+				if ( ((skill + pinluck)/2.0 * 1.2) > .5 ) pins[i] = false;
+				// this pin just knocked down
+				if (!pins[i]) count++;
 			}
 		}
 
@@ -112,37 +107,10 @@ public class Pinsetter extends Observable {
 	 * @post pins array is reset to all pins up
 	 */
 	public void resetPins() {
-		for (int i=0; i <= 9; i++) {
+		for (int i=0; i < NUMBER_OF_PINS; i++) {
 			pins[i] = true;
 		}
-	}		
-	
-	/**
-	 * @return the rnd
-	 */
-	public Random getRnd() {
-		return rnd;
 	}
 
-	/**
-	 * @return the pins
-	 */
-	public boolean[] getPins() {
-		return pins;
-	}
-
-	/**
-	 * @return the foul
-	 */
-	public boolean isFoul() {
-		return foul;
-	}
-
-	/**
-	 * @return the throwNumber
-	 */
-	public int getThrowNumber() {
-		return throwNumber;
-	}
 }
 
