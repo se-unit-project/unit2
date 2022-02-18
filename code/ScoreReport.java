@@ -8,108 +8,57 @@
 import java.io.*;
 import java.util.Vector;
 import java.util.Iterator;
-import java.net.*;
-import java.awt.print.*;
 
 public class ScoreReport {
 
-	private String content;
-	
+	private final ShareReport shareReport = new ShareReport();
+
 	public ScoreReport( Bowler bowler, int[] scores, int games ) {
 		String nick = bowler.getNick();
 		String full = bowler.getFullName();
-		Vector v = null;
+		Vector vec_scores = null;
 		try{
-			v = ScoreHistoryFile.getScores(nick);
+			vec_scores = ScoreHistoryFile.getScores(nick);
 		} catch (Exception e){System.err.println("Error: " + e);}
 		
-		Iterator scoreIt = v.iterator();
-		
-		content = "";
-		content += "--Lucky Strike Bowling Alley Score Report--\n";
-		content += "\n";
-		content += "Report for " + full + ", aka \"" + nick + "\":\n";
-		content += "\n";
-		content += "Final scores for this session: ";
-		content += scores[0];
+		Iterator scoreIt = vec_scores.iterator();
+
+		shareReport.setContent("");
+		shareReport.setContent(shareReport.getContent() + "--Lucky Strike Bowling Alley Score Report--\n");
+		shareReport.setContent(shareReport.getContent() + "\n");
+		shareReport.setContent(shareReport.getContent() + "Report for " + full + ", aka \"" + nick + "\":\n");
+		shareReport.setContent(shareReport.getContent() + "\n");
+		shareReport.setContent(shareReport.getContent() + "Final scores for this session: ");
+		shareReport.setContent(shareReport.getContent() + scores[0]);
 		for (int i = 1; i < scores.length; i++){
-			content += ", " + scores[i];
+			shareReport.setContent(shareReport.getContent() + ", " + scores[i]);
 		}
-		content += ".\n";
-		content += "\n";
-		content += "\n";
-		content += "Previous scores by date: \n";
+		shareReport.setContent(shareReport.getContent() + ".\n");
+		shareReport.setContent(shareReport.getContent() + "\n");
+		shareReport.setContent(shareReport.getContent() + "\n");
+		shareReport.setContent(shareReport.getContent() + "Previous scores by date: \n");
 		while (scoreIt.hasNext()){
 			Score score = (Score) scoreIt.next();
-			content += "  " + score.getDate() + " - " +  score.getScore();
-			content += "\n";
+			shareReport.setContent(shareReport.getContent() + "  " + score.getDate() + " - " + score.getScore());
+			shareReport.setContent(shareReport.getContent() + "\n");
 		}
-		content += "\n\n";
-		content += "Thank you for your continuing patronage.";
+		shareReport.setContent(shareReport.getContent() + "\n\n");
+		shareReport.setContent(shareReport.getContent() + "Thank you for your continuing patronage.");
 	}
 
 	public void sendEmail(String recipient) {
-		try {
-			Socket s = new Socket("osfmail.rit.edu", 25);
-			BufferedReader in =
-				new BufferedReader(
-					new InputStreamReader(s.getInputStream(), "8859_1"));
-			BufferedWriter out =
-				new BufferedWriter(
-					new OutputStreamWriter(s.getOutputStream(), "8859_1"));
-
-			String boundary = "DataSeparatorString";
-
-			// here you are supposed to send your username
-			sendln(in, out, "HELO world");
-			sendln(in, out, "MAIL FROM: <abc1234@rit.edu>");
-			sendln(in, out, "RCPT TO: <" + recipient + ">");
-			sendln(in, out, "DATA");
-			sendln(out, "Subject: Bowling Score Report ");
-			sendln(out, "From: <Lucky Strikes Bowling Club>");
-
-			sendln(out, "Content-Type: text/plain; charset=\"us-ascii\"\r\n");
-			sendln(out, content + "\n\n");
-			sendln(out, "\r\n");
-
-			sendln(in, out, ".");
-			sendln(in, out, "QUIT");
-			s.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		shareReport.sendEmail(recipient);
 	}
 
 	public void sendPrintout() {
-		PrinterJob job = PrinterJob.getPrinterJob();
-		PrintableText printobj = new PrintableText(content);
-		job.setPrintable(printobj);
-		if (job.printDialog()) {
-			try {
-				job.print();
-			} catch (PrinterException e) {
-				System.out.println(e);
-			}
-		}
+		shareReport.sendPrintout();
 	}
 
 	public void sendln(BufferedReader in, BufferedWriter out, String s) {
-		try {
-			out.write(s + "\r\n");
-			out.flush();
-			s = in.readLine();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		shareReport.sendln(in, out, s);
 	}
 
 	public void sendln(BufferedWriter out, String s) {
-		try {
-			out.write(s + "\r\n");
-			out.flush();
-			System.out.println(s);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		shareReport.sendln(out, s);
 	}
 }
