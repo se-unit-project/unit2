@@ -1,42 +1,33 @@
-/* ControlDeskView.java
- *
- *  Version:
- *			$Id$
- * 
- *  Revisions:
- * 		$Log$
- * 
- */
+
+
 
 /**
  * Class for representation of the control desk
  *
  */
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.border.*;
-import javax.swing.event.*;
 
+import javax.swing.*;
+import javax.swing.border.TitledBorder;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.*;
 
-public class ControlDeskView implements ActionListener, ControlDeskObserver {
+public class ControlDeskView implements ActionListener, Observer {
 
-	private JButton addParty, finished, assign;
+	private JButton addParty, finished, assign,showScore;
 	private JFrame win;
 	private JList partyList;
-	
-	/** The maximum  number of members in a party */
-	private int maxMembers;
-	
+	private int maxMembers; // 	The maximum  number of members in a party 
 	private ControlDesk controlDesk;
 
 	/**
 	 * Displays a GUI representation of the ControlDesk
 	 *
 	 */
-
 	public ControlDeskView(ControlDesk controlDesk, int maxMembers) {
 
 		this.controlDesk = controlDesk;
@@ -62,12 +53,18 @@ public class ControlDeskView implements ActionListener, ControlDeskObserver {
 		addPartyPanel.add(addParty);
 		controlsPanel.add(addPartyPanel);
 
+//		showScore = new JButton("Show Scores");
+//		JPanel showScorePanel = new JPanel();
+//		showScorePanel.setLayout(new FlowLayout());
+//		showScore.addActionListener(this);
+//		showScorePanel.add(showScore);
+//		controlsPanel.add(showScorePanel);
+
 		assign = new JButton("Assign Lanes");
 		JPanel assignPanel = new JPanel();
 		assignPanel.setLayout(new FlowLayout());
 		assign.addActionListener(this);
 		assignPanel.add(assign);
-//		controlsPanel.add(assignPanel);
 
 		finished = new JButton("Finished");
 		JPanel finishedPanel = new JPanel();
@@ -87,8 +84,7 @@ public class ControlDeskView implements ActionListener, ControlDeskObserver {
 		while (it.hasNext()) {
 			Lane curLane = (Lane) it.next();
 			LaneStatusView laneStat = new LaneStatusView(curLane,(laneCount+1));
-			curLane.subscribe(laneStat);
-			((Pinsetter)curLane.getPinsetter()).subscribe(laneStat);
+			curLane.addObserver(laneStat);
 			JPanel lanePanel = laneStat.showLane();
 			lanePanel.setBorder(new TitledBorder("Lane" + ++laneCount ));
 			laneStatusPanel.add(lanePanel);
@@ -109,7 +105,6 @@ public class ControlDeskView implements ActionListener, ControlDeskObserver {
 		partyPane.setVerticalScrollBarPolicy(
 			JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		partyPanel.add(partyPane);
-		//		partyPanel.add(partyList);
 
 		// Clean up main panel
 		colPanel.add(controlsPanel, "East");
@@ -133,7 +128,6 @@ public class ControlDeskView implements ActionListener, ControlDeskObserver {
 			((screenSize.width) / 2) - ((win.getSize().width) / 2),
 			((screenSize.height) / 2) - ((win.getSize().height) / 2));
 		win.show();
-
 	}
 
 	/**
@@ -142,11 +136,13 @@ public class ControlDeskView implements ActionListener, ControlDeskObserver {
 	 * @param e	the ActionEvent that triggered the handler
 	 *
 	 */
-
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(addParty)) {
 			AddPartyView addPartyWin = new AddPartyView(this, maxMembers);
 		}
+//		if (e.getSource().equals(showScore)) {
+//            ShowScores showScoreWin = new ShowScores();
+//        }
 		if (e.getSource().equals(assign)) {
 			controlDesk.assignLane();
 		}
@@ -162,19 +158,18 @@ public class ControlDeskView implements ActionListener, ControlDeskObserver {
 	 * @param addPartyView	the AddPartyView that is providing a new party
 	 *
 	 */
-
 	public void updateAddParty(AddPartyView addPartyView) {
 		controlDesk.addPartyQueue(addPartyView.getParty());
 	}
 
-	/**
-	 * Receive a broadcast from a ControlDesk
-	 *
-	 * @param ce	the ControlDeskEvent that triggered the handler
-	 *
-	 */
-
-	public void receiveControlDeskEvent(ControlDeskEvent ce) {
-		partyList.setListData(((Vector) ce.getPartyQueue()));
+	@Override
+	public void update(Observable o, Object arg) {
+		ControlDesk cd;
+		try{
+			cd = (ControlDesk)o;
+		}catch(Exception e){
+			return;
+		}
+		partyList.setListData(((Vector) cd.getPartyQueue()));
 	}
 }

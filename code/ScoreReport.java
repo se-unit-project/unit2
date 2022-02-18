@@ -1,15 +1,14 @@
+
 /**
  * 
- * SMTP implementation based on code by Réal Gagnon mailto:real@rgagnon.com
+ * SMTP implementation based on code by Real Gagnon mailto:real@rgagnon.com
  * 
  */
-
 
 import java.io.*;
 import java.util.Vector;
 import java.util.Iterator;
 import java.net.*;
-import java.awt.*;
 import java.awt.print.*;
 
 public class ScoreReport {
@@ -33,7 +32,7 @@ public class ScoreReport {
 		content += "\n";
 		content += "Final scores for this session: ";
 		content += scores[0];
-		for (int i = 1; i < games; i++){
+		for (int i = 1; i < scores.length; i++){
 			content += ", " + scores[i];
 		}
 		content += ".\n";
@@ -47,7 +46,6 @@ public class ScoreReport {
 		}
 		content += "\n\n";
 		content += "Thank you for your continuing patronage.";
-
 	}
 
 	public void sendEmail(String recipient) {
@@ -64,7 +62,7 @@ public class ScoreReport {
 
 			// here you are supposed to send your username
 			sendln(in, out, "HELO world");
-			sendln(in, out, "MAIL FROM: <mda2376@rit.edu>");
+			sendln(in, out, "MAIL FROM: <abc1234@rit.edu>");
 			sendln(in, out, "RCPT TO: <" + recipient + ">");
 			sendln(in, out, "DATA");
 			sendln(out, "Subject: Bowling Score Report ");
@@ -84,11 +82,8 @@ public class ScoreReport {
 
 	public void sendPrintout() {
 		PrinterJob job = PrinterJob.getPrinterJob();
-
 		PrintableText printobj = new PrintableText(content);
-
 		job.setPrintable(printobj);
-
 		if (job.printDialog()) {
 			try {
 				job.print();
@@ -96,16 +91,13 @@ public class ScoreReport {
 				System.out.println(e);
 			}
 		}
-
 	}
 
 	public void sendln(BufferedReader in, BufferedWriter out, String s) {
 		try {
 			out.write(s + "\r\n");
 			out.flush();
-			// System.out.println(s);
 			s = in.readLine();
-			// System.out.println(s);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -120,6 +112,4 @@ public class ScoreReport {
 			e.printStackTrace();
 		}
 	}
-
-
 }

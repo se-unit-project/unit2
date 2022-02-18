@@ -1,18 +1,19 @@
-import java.util.Vector;
-import java.io.*;
 
+/**
+ * drive serves as the startup file for the application.
+ * 
+ *
+ */
 public class drive {
 
 	public static void main(String[] args) {
 
-		int numLanes = 3;
-		int maxPatronsPerParty=5;
+		final int NUM_LANES = 3;
+		final int MAX_PATRONS_PER_ALLEY = 10;
 
-		Alley a = new Alley( numLanes );
-		ControlDesk controlDesk = a.getControlDesk();
-
-		ControlDeskView cdv = new ControlDeskView( controlDesk, maxPatronsPerParty);
-		controlDesk.subscribe( cdv );
-
+		// Create a control desk and run the GUI
+		ControlDesk controlDesk = new ControlDesk(NUM_LANES);
+		ControlDeskView cdv = new ControlDeskView( controlDesk, MAX_PATRONS_PER_ALLEY);
+		controlDesk.addObserver(cdv);
 	}
 }

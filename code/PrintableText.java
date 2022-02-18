@@ -1,6 +1,3 @@
-/**
- *
- */
 
 import java.awt.*;
 import java.awt.print.*;
@@ -40,8 +37,6 @@ public class PrintableText implements Printable {
 				layout.draw(g2d, (float) pen.x, (float) (pen.y + i*14));
 			}
 		}
-
 		return PAGE_EXISTS;
 	}
-
 }
