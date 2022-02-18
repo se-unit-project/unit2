@@ -1,13 +1,17 @@
 
 
 
-/**
+/*
  * Class for representation of the control desk
  *
  */
 
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -19,7 +23,7 @@ import java.util.*;
 public class ControlDeskView implements ActionListener, Observer {
 
 	private JButton addParty, finished, assign,showScore;
-	private JFrame win;
+	private JFrame window;
 	private JList partyList;
 	private int maxMembers; // 	The maximum  number of members in a party 
 	private ControlDesk controlDesk;
@@ -34,9 +38,9 @@ public class ControlDeskView implements ActionListener, Observer {
 		this.maxMembers = maxMembers;
 		int numLanes = controlDesk.getNumLanes();
 
-		win = new JFrame("Control Desk");
-		win.getContentPane().setLayout(new BorderLayout());
-		((JPanel) win.getContentPane()).setOpaque(false);
+		window = new JFrame("Control Desk");
+		window.getContentPane().setLayout(new BorderLayout());
+		((JPanel) window.getContentPane()).setOpaque(false);
 
 		JPanel colPanel = new JPanel();
 		colPanel.setLayout(new BorderLayout());
@@ -79,10 +83,10 @@ public class ControlDeskView implements ActionListener, Observer {
 		laneStatusPanel.setBorder(new TitledBorder("Lane Status"));
 
 		HashSet lanes=controlDesk.getLanes();
-		Iterator it = lanes.iterator();
+		Iterator laneInterator = lanes.iterator();
 		int laneCount=0;
-		while (it.hasNext()) {
-			Lane curLane = (Lane) it.next();
+		while (laneInterator.hasNext()) {
+			Lane curLane = (Lane) laneInterator.next();
 			LaneStatusView laneStat = new LaneStatusView(curLane,(laneCount+1));
 			curLane.addObserver(laneStat);
 			JPanel lanePanel = laneStat.showLane();
@@ -111,12 +115,12 @@ public class ControlDeskView implements ActionListener, Observer {
 		colPanel.add(laneStatusPanel, "Center");
 		colPanel.add(partyPanel, "West");
 
-		win.getContentPane().add("Center", colPanel);
+		window.getContentPane().add("Center", colPanel);
 
-		win.pack();
+		window.pack();
 
 		/* Close program when this window closes */
-		win.addWindowListener(new WindowAdapter() {
+		window.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				System.exit(0);
 			}
@@ -124,10 +128,10 @@ public class ControlDeskView implements ActionListener, Observer {
 
 		// Center Window on Screen
 		Dimension screenSize = (Toolkit.getDefaultToolkit()).getScreenSize();
-		win.setLocation(
-			((screenSize.width) / 2) - ((win.getSize().width) / 2),
-			((screenSize.height) / 2) - ((win.getSize().height) / 2));
-		win.show();
+		window.setLocation(
+			((screenSize.width) / 2) - ((window.getSize().width) / 2),
+			((screenSize.height) / 2) - ((window.getSize().height) / 2));
+		window.show();
 	}
 
 	/**
@@ -147,7 +151,7 @@ public class ControlDeskView implements ActionListener, Observer {
 			controlDesk.assignLane();
 		}
 		if (e.getSource().equals(finished)) {
-			win.hide();
+			window.hide();
 			System.exit(0);
 		}
 	}
@@ -163,13 +167,13 @@ public class ControlDeskView implements ActionListener, Observer {
 	}
 
 	@Override
-	public void update(Observable o, Object arg) {
-		ControlDesk cd;
+	public void update(Observable o, Object obj) {
+		ControlDesk controlDesk;
 		try{
-			cd = (ControlDesk)o;
+			controlDesk = (ControlDesk)o;
 		}catch(Exception e){
 			return;
 		}
-		partyList.setListData(((Vector) cd.getPartyQueue()));
+		partyList.setListData(( controlDesk.getPartyQueue()));
 	}
 }
