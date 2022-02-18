@@ -1,6 +1,6 @@
 
 
-/**
+/*
  * Class that represents control desk
  *
  */
@@ -25,7 +25,7 @@ public class ControlDesk extends Observable implements Runnable {
 	 */
 	public ControlDesk(int numLanes) {
 		this.numLanes = numLanes;
-		lanes = new HashSet(numLanes);
+		lanes = new HashSet<>(numLanes);
 		partyQueue = new Queue();
 		for (int i = 0; i < numLanes; i++) {
 			lanes.add(new Lane());
@@ -71,9 +71,9 @@ public class ControlDesk extends Observable implements Runnable {
 	 *
 	 */
 	public void assignLane() {
-		Iterator laneIterator = lanes.iterator();
+		Iterator<Lane> laneIterator = lanes.iterator();
 		while (laneIterator.hasNext() && partyQueue.hasMoreElements()) {
-			Lane curLane = (Lane) laneIterator.next();
+			Lane curLane = laneIterator.next();
 
 			if (curLane.isPartyAssigned() == false) {
 				System.out.println("ok... assigning this party");
@@ -90,7 +90,7 @@ public class ControlDesk extends Observable implements Runnable {
 	 *
 	 */
 	public void addPartyQueue(Vector partyNicks) {
-		Vector partyBowlers = new Vector();
+		Vector<Bowler> partyBowlers = new Vector<>();
 		for (int i = 0; i < partyNicks.size(); i++) {
 			Bowler newBowler = registerPatron(((String) partyNicks.get(i)));
 			partyBowlers.add(newBowler);
@@ -106,8 +106,8 @@ public class ControlDesk extends Observable implements Runnable {
 	 * @return a Vecotr of Strings
 	 *
 	 */
-	public Vector getPartyQueue() {
-		Vector displayPartyQueue = new Vector();
+	public Vector<String> getPartyQueue() {
+		Vector<String> displayPartyQueue = new Vector<>();
 		for ( int i=0; i < ( (Vector)partyQueue.asVector()).size(); i++ ) {
 			String nextParty =
 					((Bowler) ((Vector) ((Party) partyQueue.asVector().get( i ) ).getMembers())
@@ -143,7 +143,7 @@ public class ControlDesk extends Observable implements Runnable {
 	 * @return a HashSet of Lanes
 	 *
 	 */
-	public HashSet getLanes() {
+	public HashSet<Lane> getLanes() {
 		return lanes;
 	}
 }

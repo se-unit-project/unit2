@@ -1,13 +1,13 @@
 
 
-import java.util.*;
 import java.io.*;
+import java.util.Vector;
 
 public class ScoreHistoryFile {
 
-	private static String SCOREHISTORY_DAT = "./SCOREHISTORY.DAT";
+	private final static String SCOREHISTORY_DAT = "./SCOREHISTORY.DAT";
 
-	public static void addScore(String nick, String date, String score) throws IOException, FileNotFoundException {
+	public static void addScore(String nick, String date, String score) throws IOException {
 		String data = nick + "\t" + date + "\t" + score + "\n";
 		RandomAccessFile out = new RandomAccessFile(SCOREHISTORY_DAT, "rw");
 		out.skipBytes((int) out.length());
@@ -15,9 +15,9 @@ public class ScoreHistoryFile {
 		out.close();
 	}
 
-	public static Vector getScores(String nick)
-		throws IOException, FileNotFoundException {
-		Vector scores = new Vector();
+	public static Vector<Score> getScores(String nick)
+		throws IOException {
+		Vector<Score> scores = new Vector<>();
 		BufferedReader in =
 			new BufferedReader(new FileReader(SCOREHISTORY_DAT));
 		String data;

@@ -146,7 +146,7 @@ public class LaneStatusView implements ActionListener, Observer {
 					int myIndex = 0;
 					while (scoreIt.hasNext()){
 						Bowler thisBowler = (Bowler)scoreIt.next();
-						ScoreReport sr = new ScoreReport( thisBowler, lane.getFinalScores()[myIndex++], lane.getGameNumber() );
+						ScoreReport sr = new ScoreReport( thisBowler, lane.getFinalScores()[myIndex++]);
 						sr.sendEmail(thisBowler.getEmail());
 						Iterator printIt = printVector.iterator();
 						while (printIt.hasNext()){

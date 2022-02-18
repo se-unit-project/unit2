@@ -1,5 +1,5 @@
 
-/**
+/*
  * 
  * SMTP implementation based on code by Real Gagnon mailto:real@rgagnon.com
  * 
@@ -13,15 +13,15 @@ public class ScoreReport {
 
 	private final ShareReport shareReport = new ShareReport();
 
-	public ScoreReport( Bowler bowler, int[] scores, int games ) {
+	public ScoreReport(Bowler bowler, int[] scores) {
 		String nick = bowler.getNick();
 		String full = bowler.getFullName();
-		Vector vec_scores = null;
+		Vector<Score> vec_scores = null;
 		try{
 			vec_scores = ScoreHistoryFile.getScores(nick);
 		} catch (Exception e){System.err.println("Error: " + e);}
 		
-		Iterator scoreIt = vec_scores.iterator();
+		Iterator<Score> scoreIt = vec_scores.iterator();
 
 		shareReport.setContent("");
 		shareReport.setContent(shareReport.getContent() + "--Lucky Strike Bowling Alley Score Report--\n");
@@ -38,7 +38,7 @@ public class ScoreReport {
 		shareReport.setContent(shareReport.getContent() + "\n");
 		shareReport.setContent(shareReport.getContent() + "Previous scores by date: \n");
 		while (scoreIt.hasNext()){
-			Score score = (Score) scoreIt.next();
+			Score score = scoreIt.next();
 			shareReport.setContent(shareReport.getContent() + "  " + score.getDate() + " - " + score.getScore());
 			shareReport.setContent(shareReport.getContent() + "\n");
 		}
