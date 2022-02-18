@@ -1,9 +1,9 @@
-
 import java.awt.*;
-import java.awt.print.*;
-import java.awt.geom.*;
-import java.awt.font.*;
-import java.text.*;
+import java.awt.font.FontRenderContext;
+import java.awt.font.TextLayout;
+import java.awt.geom.Point2D;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
 
 public class PrintableText implements Printable {
 	String text;
@@ -15,9 +15,7 @@ public class PrintableText implements Printable {
 	}
 
 	public int print(Graphics g, PageFormat pageFormat, int pageIndex) {
-		if (pageIndex > 0) {
-			return NO_SUCH_PAGE;
-		}
+		if (pageIndex > 0) return NO_SUCH_PAGE;
 		
 		Graphics2D g2d = (Graphics2D) g; // Allow use of Java 2 graphics on
 
@@ -31,12 +29,11 @@ public class PrintableText implements Printable {
 
 		String lines[] = text.split("\n");
 
-		for (int i=0; i < lines.length; i++) {		
+		for (int i=0; i < lines.length; i++)
 			if (lines[i].length() > 0) {
 				TextLayout layout = new TextLayout(lines[i], font, frc);
-				layout.draw(g2d, (float) pen.x, (float) (pen.y + i*14));
+				layout.draw(g2d, (float) pen.x, (float) (pen.y + i * 14));
 			}
-		}
 		return PAGE_EXISTS;
 	}
 }
