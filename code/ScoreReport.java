@@ -14,7 +14,8 @@ public class ScoreReport {
 	private final ShareReport shareReport = new ShareReport();
 
 	public ScoreReport(Bowler bowler, int[] scores) {
-		String nick = bowler.getNick();
+		String nick = bowler.getNickName();
+
 		String full = bowler.getFullName();
 		Vector<Score> vec_scores = null;
 		try{

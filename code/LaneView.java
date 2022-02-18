@@ -94,7 +94,7 @@ public class LaneView implements ActionListener, Observer {
 			pins[i] = new JPanel();
 			pins[i].setBorder(
 					BorderFactory.createTitledBorder(
-							((Bowler) bowlers.get(i)).getNick()));
+							((Bowler) bowlers.get(i)).getNickName()));
 			pins[i].setLayout(new GridLayout(0, NUM_OF_ROUNDS));
 			for (int k = 0; k != NUM_OF_ROUNDS; k++) {
 				scores[i][k] = new JPanel();

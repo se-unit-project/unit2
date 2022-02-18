@@ -153,8 +153,8 @@ public class LaneStatusView implements ActionListener, Observer {
 						sr.sendEmail(thisBowler.getEmail());
 						Iterator printIt = printVector.iterator();
 						while (printIt.hasNext()){
-							if (thisBowler.getNick() == (String)printIt.next()){
-								System.out.println("Printing " + thisBowler.getNick());
+							if (thisBowler.getNickName() == (String)printIt.next()){
+								System.out.println("Printing " + thisBowler.getNickName());
 								sr.sendPrintout();
 							}
 						}
