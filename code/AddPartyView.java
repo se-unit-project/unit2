@@ -32,7 +32,6 @@ import javax.swing.border.*;
 import javax.swing.event.*;
 
 import java.util.*;
-import java.text.*;
 
 /**
  * Constructor for GUI used to Add Parties to the waiting party queue.
@@ -204,10 +203,7 @@ public class AddPartyView implements ActionListener, ListSelectionListener {
 		try {
 			Bowler checkBowler = BowlerFile.getBowlerInfo( newPatron.getNick() );
 			if ( checkBowler == null ) {
-				BowlerFile.putBowlerInfo(
-						newPatron.getNick(),
-						newPatron.getFull(),
-						newPatron.getEmail());
+				BowlerFile.storeBowlerInfo(new Bowler(newPatron.getNick(),newPatron.getFull(),newPatron.getEmail()));
 				bowlerdb = new Vector(BowlerFile.getBowlers());
 				allBowlers.setListData(bowlerdb);
 				party.add(newPatron.getNick());

@@ -10,7 +10,6 @@ import java.io.*;
 
 public class BowlerFile {
 
-	/** The location of the bowelr database */
 	private static String BOWLER_DAT = "./BOWLERS.DAT";
 
 	/**
@@ -23,7 +22,7 @@ public class BowlerFile {
 	 */
 
 	public static Bowler getBowlerInfo(String nickName)
-			throws IOException, FileNotFoundException {
+			throws IOException {
 
 		BufferedReader in = new BufferedReader(new FileReader(BOWLER_DAT));
 		String data;
@@ -42,13 +41,11 @@ public class BowlerFile {
 	/**
 	 * Stores a Bowler in the database
 	 *
-	 * @param nickName	the NickName of the Bowler
-	 * @param fullName	the FullName of the Bowler
-	 * @param email	the E-mail Address of the Bowler
+	 * @param bowler
 	 *
 	 */
-	public static void putBowlerInfo(String nickName, String fullName, String email) throws IOException, FileNotFoundException {
-		String data = nickName + "\t" + fullName + "\t" + email + "\n";
+	public static void storeBowlerInfo(Bowler bowler) throws IOException {
+		String data = bowler.getNickName() + "\t" + bowler.getFullName() + "\t" + bowler.getEmail() + "\n";
 		RandomAccessFile out = new RandomAccessFile(BOWLER_DAT, "rw");
 		out.skipBytes((int) out.length());
 		out.writeBytes(data);
@@ -61,16 +58,16 @@ public class BowlerFile {
 	 * @return a Vector of Strings
 	 * 
 	 */
-	public static Vector getBowlers() throws IOException, FileNotFoundException {
-		Vector allBowlers = new Vector();
+	public static Vector getBowlers() throws IOException {
+		Vector bowlers = new Vector();
 		BufferedReader in = new BufferedReader(new FileReader(BOWLER_DAT));
 		String data;
 		while ((data = in.readLine()) != null) {
 			// File format is nick\tfname\te-mail
 			String[] bowler = data.split("\t");
 			//"Nick: bowler[0] Full: bowler[1] email: bowler[2]
-			allBowlers.add(bowler[0]);
+			bowlers.add(bowler[0]);
 		}
-		return allBowlers;
+		return bowlers;
 	}
 }
