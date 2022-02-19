@@ -39,25 +39,13 @@ public class NewPatronView implements ActionListener {
 		patronPanel.setBorder(new TitledBorder("Your Info"));
 
 		JPanel nickPanel = new JPanel();
-		nickPanel.setLayout(new FlowLayout());
-		nickLabel = new JLabel("Nick Name");
-		nickField = new JTextField("", 15);
-		nickPanel.add(nickLabel);
-		nickPanel.add(nickField);
+		addPanel(nickPanel, nickLabel, "Nick Name", nickField);
 
 		JPanel fullPanel = new JPanel();
-		fullPanel.setLayout(new FlowLayout());
-		fullLabel = new JLabel("Full Name");
-		fullField = new JTextField("", 15);
-		fullPanel.add(fullLabel);
-		fullPanel.add(fullField);
+		addPanel(fullPanel, fullLabel, "Full Name", fullField);
 
 		JPanel emailPanel = new JPanel();
-		emailPanel.setLayout(new FlowLayout());
-		emailLabel = new JLabel("E-Mail");
-		emailField = new JTextField("", 15);
-		emailPanel.add(emailLabel);
-		emailPanel.add(emailField);
+		addPanel(emailPanel, emailLabel, "E-Mail", emailField);
 
 		patronPanel.add(nickPanel);
 		patronPanel.add(fullPanel);
@@ -71,15 +59,11 @@ public class NewPatronView implements ActionListener {
 
 		finished = new JButton("Add Patron");
 		JPanel finishedPanel = new JPanel();
-		finishedPanel.setLayout(new FlowLayout());
-		finished.addActionListener(this);
-		finishedPanel.add(finished);
+		addLayout(finishedPanel, finished);
 
 		abort = new JButton("Abort");
 		JPanel abortPanel = new JPanel();
-		abortPanel.setLayout(new FlowLayout());
-		abort.addActionListener(this);
-		abortPanel.add(abort);
+		addLayout(abortPanel, abort);
 
 		buttonPanel.add(abortPanel);
 		buttonPanel.add(finishedPanel);
@@ -99,6 +83,20 @@ public class NewPatronView implements ActionListener {
 			((screenSize.height) / 2) - ((win.getSize().height) / 2));
 		win.show();
 
+	}
+
+	private void addLayout(JPanel finishedPanel, JButton finished) {
+		finishedPanel.setLayout(new FlowLayout());
+		finished.addActionListener(this);
+		finishedPanel.add(finished);
+	}
+
+	private void addPanel(JPanel nickPanel, JLabel nickLabel, String Nick_Name, JTextField nickField) {
+		nickPanel.setLayout(new FlowLayout());
+		nickLabel = new JLabel(Nick_Name);
+		nickField = new JTextField("", 15);
+		nickPanel.add(nickLabel);
+		nickPanel.add(nickField);
 	}
 
 	public void actionPerformed(ActionEvent e) {
