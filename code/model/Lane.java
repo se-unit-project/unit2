@@ -1,6 +1,6 @@
 package model;
 
-import model.Bowler;
+import util.ScoreHistoryFile;
 
 import java.util.*;
 

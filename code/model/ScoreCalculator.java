@@ -1,11 +1,5 @@
 package model;
 
-/**
- * NEW CLASS FOR REFACTORING
- * 
- * @author Hunter Caskey & Sultan Mira
- *
- */
 public class ScoreCalculator {
 
 	private int[][] cumulScores; 

@@ -1,6 +1,6 @@
 package model;
 
-import viewcontrol.PrintableText;
+import util.PrintableText;
 
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
@@ -52,7 +52,7 @@ public class ShareReport {
             sendln(in, out, "QUIT");
             s.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("email not found");
         }
     }
 
