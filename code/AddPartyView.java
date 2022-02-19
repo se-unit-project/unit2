@@ -104,27 +104,19 @@ public class AddPartyView implements ActionListener, ListSelectionListener {
 
 		addPatron = new JButton("Add to Party");
 		JPanel addPatronPanel = new JPanel();
-		addPatronPanel.setLayout(new FlowLayout());
-		addPatron.addActionListener(this);
-		addPatronPanel.add(addPatron);
+		addNewPartyPanel(addPatronPanel, addPatron);
 
 		remPatron = new JButton("Remove Member");
 		JPanel remPatronPanel = new JPanel();
-		remPatronPanel.setLayout(new FlowLayout());
-		remPatron.addActionListener(this);
-		remPatronPanel.add(remPatron);
+		addNewPartyPanel(remPatronPanel, remPatron);
 
 		newPatron = new JButton("New Patron");
 		JPanel newPatronPanel = new JPanel();
-		newPatronPanel.setLayout(new FlowLayout());
-		newPatron.addActionListener(this);
-		newPatronPanel.add(newPatron);
+		addNewPartyPanel(newPatronPanel, newPatron);
 
 		finished = new JButton("Finished");
 		JPanel finishedPanel = new JPanel();
-		finishedPanel.setLayout(new FlowLayout());
-		finished.addActionListener(this);
-		finishedPanel.add(finished);
+		addNewPartyPanel(finishedPanel, finished);
 
 		buttonPanel.add(addPatronPanel);
 		buttonPanel.add(remPatronPanel);
@@ -147,6 +139,12 @@ public class AddPartyView implements ActionListener, ListSelectionListener {
 				((screenSize.height) / 2) - ((win.getSize().height) / 2));
 		win.show();
 
+	}
+
+	private void addNewPartyPanel(JPanel addPatronPanel, JButton addPatron) {
+		addPatronPanel.setLayout(new FlowLayout());
+		addPatron.addActionListener(this);
+		addPatronPanel.add(addPatron);
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -184,14 +182,10 @@ public class AddPartyView implements ActionListener, ListSelectionListener {
 	 */
 
 	public void valueChanged(ListSelectionEvent e) {
-		if (e.getSource().equals(allBowlers)) {
-			selectedNick =
-					((String) ((JList) e.getSource()).getSelectedValue());
-		}
-		if (e.getSource().equals(partyList)) {
-			selectedMember =
-					((String) ((JList) e.getSource()).getSelectedValue());
-		}
+		if (e.getSource().equals(allBowlers)) selectedNick =
+				((String) ((JList) e.getSource()).getSelectedValue());
+		if (e.getSource().equals(partyList)) selectedMember =
+				((String) ((JList) e.getSource()).getSelectedValue());
 	}
 
 	/**
@@ -218,9 +212,7 @@ public class AddPartyView implements ActionListener, ListSelectionListener {
 				allBowlers.setListData(bowlerdb);
 				party.add(newPatron.getNick());
 				partyList.setListData(party);
-			} else {
-				System.err.println( "A Bowler with that name already exists." );
-			}
+			} else System.err.println("A Bowler with that name already exists.");
 		} catch (Exception e2) {
 			System.err.println("File I/O Error");
 		}
