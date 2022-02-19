@@ -1,11 +1,11 @@
-
+package model;
 
 import java.util.Vector;
  
 public class Queue {
 	private Vector v;
 	
-	/** Queue()
+	/** model.Queue()
 	 * 
 	 * creates a new queue
 	 */

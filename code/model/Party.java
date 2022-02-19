@@ -1,4 +1,4 @@
-
+package model;
 
 /**
  *  Container that holds bowlers
@@ -13,7 +13,7 @@ public class Party {
     private Vector myBowlers;
 	
 	/**
-	 * Constructor for a Party
+	 * Constructor for a model.Party
 	 * 
 	 * @param bowlers	Vector of bowlers that are in this party
 	 */

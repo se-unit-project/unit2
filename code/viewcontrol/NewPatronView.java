@@ -1,4 +1,6 @@
+package viewcontrol;
 
+import viewcontrol.AddPartyView;
 
 import java.awt.*;
 import java.awt.event.*;

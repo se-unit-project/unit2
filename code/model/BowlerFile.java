@@ -1,23 +1,26 @@
-
+package model;
 
 /**
- * Class for interfacing with Bowler database
+ * Class for interfacing with model.Bowler database
  *
  */
 
-import java.util.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.util.Vector;
 
 public class BowlerFile {
 
 	private static String BOWLER_DAT = "./BOWLERS.DAT";
 
 	/**
-	 * Retrieves bowler information from the database and returns a Bowler objects with populated fields.
+	 * Retrieves bowler information from the database and returns a model.Bowler objects with populated fields.
 	 *
 	 * @param nickName	the nickName of the bolwer to retrieve
 	 *
-	 * @return a Bowler object
+	 * @return a model.Bowler object
 	 * 
 	 */
 
@@ -39,7 +42,7 @@ public class BowlerFile {
 	}
 
 	/**
-	 * Stores a Bowler in the database
+	 * Stores a model.Bowler in the database
 	 *
 	 * @param bowler
 	 *

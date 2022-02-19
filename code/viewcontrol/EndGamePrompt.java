@@ -1,4 +1,4 @@
-
+package viewcontrol;
 /**
  *
  * To change this generated comment edit the template variable "typecomment":

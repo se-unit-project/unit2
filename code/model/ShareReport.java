@@ -1,3 +1,7 @@
+package model;
+
+import viewcontrol.PrintableText;
+
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.BufferedReader;

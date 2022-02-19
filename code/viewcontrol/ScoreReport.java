@@ -1,9 +1,14 @@
-
+package viewcontrol;
 /*
  * 
  * SMTP implementation based on code by Real Gagnon mailto:real@rgagnon.com
  * 
  */
+
+import model.Bowler;
+import model.Score;
+import model.ScoreHistoryFile;
+import model.ShareReport;
 
 import java.io.*;
 import java.util.Vector;

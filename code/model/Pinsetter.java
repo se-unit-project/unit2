@@ -1,4 +1,4 @@
-
+package model;
 
 /**
  * Class to represent the pinsetter
@@ -38,13 +38,13 @@ public class Pinsetter extends Observable {
 		
 	}
 
-	/** Pinsetter()
+	/** model.Pinsetter()
 	 * 
 	 * Constructs a new pinsetter
 	 * 
 	 * @pre none
 	 * @post a new pinsetter is created
-	 * @return Pinsetter object
+	 * @return model.Pinsetter object
 	 */
 	public Pinsetter() {
 		pins = new boolean[NUMBER_OF_PINS];

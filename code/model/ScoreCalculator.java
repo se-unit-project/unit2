@@ -1,3 +1,4 @@
+package model;
 
 /**
  * NEW CLASS FOR REFACTORING
@@ -10,7 +11,7 @@ public class ScoreCalculator {
 	private int[][] cumulScores; 
 	
 	public ScoreCalculator(int[][] scores){
-		this.cumulScores = scores;  // Operate on Lane's reference 
+		this.cumulScores = scores;  // Operate on model.Lane's reference
 	}
 
 	protected void calculateGame(int[] bowlersScores, int bowlerIndex, int frameNumber, int roll, int pinsDown ){

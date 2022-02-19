@@ -1,4 +1,6 @@
+package model;
 
+import model.Bowler;
 
 import java.util.*;
 
@@ -22,7 +24,7 @@ public class Lane extends Observable implements Observer, Runnable {
 	private Bowler currentThrower;			// = the thrower who just took a throw
 	private ScoreCalculator sc;
 
-	/** Lane()
+	/** model.Lane()
 	 *
 	 * Constructs a new lane and starts its thread
 	 *
@@ -135,7 +137,7 @@ public class Lane extends Observable implements Observer, Runnable {
 	 * @pre none
 	 * @post the party has been assigned to the lane
 	 *
-	 * @param theParty		Party to be assigned
+	 * @param theParty		model.Party to be assigned
 	 */
 	public void assignParty( Party theParty ) {
 		party = theParty;
@@ -270,7 +272,7 @@ public class Lane extends Observable implements Observer, Runnable {
 	}
 
 	/**
-	 * Assessor to get this Lane's pinsetter
+	 * Assessor to get this model.Lane's pinsetter
 	 *
 	 * @return		A reference to this lane's pinsetter
 	 */

@@ -1,9 +1,12 @@
-
+package model;
 
 /*
  * Class that represents control desk
  *
  */
+
+import model.Bowler;
+import model.BowlerFile;
 
 import java.util.*;
 import java.io.*;
@@ -18,7 +21,7 @@ public class ControlDesk extends Observable implements Runnable {
 	private int numLanes;
 
 	/**
-	 * Constructor for the ControlDesk class
+	 * Constructor for the model.ControlDesk class
 	 *
 	 * @param numlanes	the numbler of lanes to be represented
 	 *
@@ -34,7 +37,7 @@ public class ControlDesk extends Observable implements Runnable {
 	}
 
 	/**
-	 * Main loop for ControlDesk's thread
+	 * Main loop for model.ControlDesk's thread
 	 * 
 	 */
 	public void run() {
@@ -47,11 +50,11 @@ public class ControlDesk extends Observable implements Runnable {
 	}
 
 	/**
-	 * Retrieves a matching Bowler from the bowler database.
+	 * Retrieves a matching model.Bowler from the bowler database.
 	 *
-	 * @param nickName	The NickName of the Bowler
+	 * @param nickName	The NickName of the model.Bowler
 	 *
-	 * @return a Bowler object.
+	 * @return a model.Bowler object.
 	 *
 	 */
 	private Bowler registerPatron(String nickName) {
@@ -119,7 +122,7 @@ public class ControlDesk extends Observable implements Runnable {
 	}
 
 	/**
-	 * Accessor for the number of lanes represented by the ControlDesk
+	 * Accessor for the number of lanes represented by the model.ControlDesk
 	 * 
 	 * @return an int containing the number of lanes represented
 	 *

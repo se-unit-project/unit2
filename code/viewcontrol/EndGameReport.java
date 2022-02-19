@@ -1,4 +1,7 @@
+package viewcontrol;
 
+import model.Bowler;
+import model.Party;
 
 import java.awt.*;
 import java.awt.event.*;

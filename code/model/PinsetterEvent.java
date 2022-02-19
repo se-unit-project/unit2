@@ -1,4 +1,4 @@
-
+package model;
 
 public class PinsetterEvent {
 
@@ -8,7 +8,7 @@ public class PinsetterEvent {
 	private int throwNumber;
 	private int pinsDownThisThrow;
 
-	/** PinsetterEvent()
+	/** model.PinsetterEvent()
 	 *
 	 * creates a new pinsetter event
 	 *

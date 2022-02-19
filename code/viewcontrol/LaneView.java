@@ -1,8 +1,12 @@
-
+package viewcontrol;
 /*
- *  constructs a prototype Lane View
+ *  constructs a prototype model.Lane View
  *
  */
+
+import model.Bowler;
+import model.Lane;
+import model.Party;
 
 import java.awt.*;
 import java.awt.event.*;

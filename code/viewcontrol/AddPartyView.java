@@ -1,10 +1,10 @@
-/* AddPartyView.java
+package viewcontrol;/* viewcontrol.AddPartyView.java
  *
  *  Version:
  * 		 $Id$
  * 
  *  Revisions:
- * 		$Log: AddPartyView.java,v $
+ * 		$Log: viewcontrol.AddPartyView.java,v $
  * 		Revision 1.7  2003/02/20 02:05:53  ???
  * 		Fixed addPatron so that duplicates won't be created.
  * 		
@@ -15,7 +15,7 @@
  * 		Made updates to migrate to observer model.
  * 		
  * 		Revision 1.4  2003/02/02 16:29:52  ???
- * 		Added ControlDeskEvent and ControlDeskObserver. Updated Queue to allow access to Vector so that contents could be viewed without destroying. Implemented observer model for most of ControlDesk.
+ * 		Added ControlDeskEvent and ControlDeskObserver. Updated model.Queue to allow access to Vector so that contents could be viewed without destroying. Implemented observer model for most of model.ControlDesk.
  * 		
  * 
  */
@@ -24,6 +24,9 @@
  * Class for GUI components need to add a party
  *
  */
+
+import model.Bowler;
+import model.BowlerFile;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -60,7 +63,7 @@ public class AddPartyView implements ActionListener, ListSelectionListener {
 		JPanel colPanel = new JPanel();
 		colPanel.setLayout(new GridLayout(1, 3));
 
-		// Party Panel
+		// model.Party Panel
 		JPanel partyPanel = new JPanel();
 		partyPanel.setLayout(new FlowLayout());
 		partyPanel.setBorder(new TitledBorder("Your Party"));
@@ -76,7 +79,7 @@ public class AddPartyView implements ActionListener, ListSelectionListener {
 		JScrollPane partyPane = new JScrollPane(partyList);
 		partyPanel.add(partyPane);
 
-		// Bowler Database
+		// model.Bowler Database
 		JPanel bowlerPanel = new JPanel();
 		bowlerPanel.setLayout(new FlowLayout());
 		bowlerPanel.setBorder(new TitledBorder("Bowler Database"));
@@ -188,16 +191,16 @@ public class AddPartyView implements ActionListener, ListSelectionListener {
 	}
 
 	/**
-	 * Accessor for Party
+	 * Accessor for model.Party
 	 */
 	public Vector getNames() {
 		return party;
 	}
 
 	/**
-	 * Called by NewPatronView to notify AddPartyView to update
+	 * Called by viewcontrol.NewPatronView to notify viewcontrol.AddPartyView to update
 	 * 
-	 * @param newPatron the NewPatronView that called this method
+	 * @param newPatron the viewcontrol.NewPatronView that called this method
 	 */
 	public void updateNewPatron(NewPatronView newPatron) {
 		try {
@@ -215,7 +218,7 @@ public class AddPartyView implements ActionListener, ListSelectionListener {
 	}
 
 	/**
-	 * Accessor for Party
+	 * Accessor for model.Party
 	 */
 	public Vector getParty() {
 		return party;

@@ -1,4 +1,7 @@
+package viewcontrol;
 
+import model.Pinsetter;
+import model.PinsetterEvent;
 
 import java.awt.*;
 import javax.swing.*;
@@ -28,7 +31,7 @@ public class PinsetterView implements Observer {
 	 *                      1
 	 *
 	 */
-	public PinsetterView ( Pinsetter ps, int laneNum ) {
+	public PinsetterView (Pinsetter ps, int laneNum ) {
 		ps.addObserver(this);
 		frame = new JFrame ( "Lane " + laneNum + ":" );
 

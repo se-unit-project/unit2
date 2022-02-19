@@ -1,4 +1,4 @@
-
+package viewcontrol;
 
 
 /*
@@ -6,6 +6,10 @@
  *
  */
 
+
+import model.ControlDesk;
+import model.Lane;
+import viewcontrol.AddPartyView;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -29,7 +33,7 @@ public class ControlDeskView implements ActionListener, Observer {
 	private ControlDesk controlDesk;
 
 	/**
-	 * Displays a GUI representation of the ControlDesk
+	 * Displays a GUI representation of the model.ControlDesk
 	 *
 	 */
 	public ControlDeskView(ControlDesk controlDesk, int maxMembers) {
@@ -77,7 +81,7 @@ public class ControlDeskView implements ActionListener, Observer {
 		finishedPanel.add(finished);
 		controlsPanel.add(finishedPanel);
 
-		// Lane Status Panel
+		// model.Lane Status Panel
 		JPanel laneStatusPanel = new JPanel();
 		laneStatusPanel.setLayout(new GridLayout(numLanes, 1));
 		laneStatusPanel.setBorder(new TitledBorder("Lane Status"));
@@ -94,7 +98,7 @@ public class ControlDeskView implements ActionListener, Observer {
 			laneStatusPanel.add(lanePanel);
 		}
 
-		// Party Queue Panel
+		// model.Party model.Queue Panel
 		JPanel partyPanel = new JPanel();
 		partyPanel.setLayout(new FlowLayout());
 		partyPanel.setBorder(new TitledBorder("Party Queue"));
@@ -159,7 +163,7 @@ public class ControlDeskView implements ActionListener, Observer {
 	/**
 	 * Receive a new party from andPartyView.
 	 *
-	 * @param addPartyView	the AddPartyView that is providing a new party
+	 * @param addPartyView	the viewcontrol.AddPartyView that is providing a new party
 	 *
 	 */
 	public void updateAddParty(AddPartyView addPartyView) {

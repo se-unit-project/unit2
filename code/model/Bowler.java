@@ -1,4 +1,4 @@
-
+package model;
 
 /**
  *  Class that holds all bowler info
