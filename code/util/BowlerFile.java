@@ -1,9 +1,11 @@
-package model;
+package util;
 
 /**
  * Class for interfacing with model.Bowler database
  *
  */
+
+import model.Bowler;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

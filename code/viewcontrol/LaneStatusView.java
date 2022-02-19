@@ -4,8 +4,7 @@ import model.Bowler;
 import model.Lane;
 import model.Pinsetter;
 import model.PinsetterEvent;
-import viewcontrol.EndGamePrompt;
-import viewcontrol.EndGameReport;
+import util.ScoreReport;
 
 import java.awt.*;
 import java.awt.event.*;

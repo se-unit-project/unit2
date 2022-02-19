@@ -26,7 +26,7 @@ package viewcontrol;/* viewcontrol.AddPartyView.java
  */
 
 import model.Bowler;
-import model.BowlerFile;
+import util.BowlerFile;
 
 import java.awt.*;
 import java.awt.event.*;

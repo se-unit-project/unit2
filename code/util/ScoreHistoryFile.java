@@ -1,4 +1,6 @@
-package model;
+package util;
+
+import model.Score;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

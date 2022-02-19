@@ -5,8 +5,8 @@ package model;
  *
  */
 
-import model.Bowler;
-import model.BowlerFile;
+import util.BowlerFile;
+import util.Queue;
 
 import java.util.*;
 import java.io.*;
@@ -16,7 +16,7 @@ public class ControlDesk extends Observable implements Runnable {
 	/** The collection of Lanes */
 	private HashSet<Lane> lanes;
 	/** The party wait queue */
-	private Queue partyQueue;
+	private util.Queue partyQueue;
 	/** The number of lanes represented */
 	private int numLanes;
 
