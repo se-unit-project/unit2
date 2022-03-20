@@ -5,9 +5,11 @@ package model;
  *
  */
 
+import util.BowlerDb;
 import util.BowlerFile;
 import util.Queue;
 
+import java.sql.SQLException;
 import java.util.*;
 import java.io.*;
 
@@ -23,7 +25,7 @@ public class ControlDesk extends Observable implements Runnable {
 	/**
 	 * Constructor for the model.ControlDesk class
 	 *
-	 * @param numlanes	the numbler of lanes to be represented
+	 * @param numLanes	the numbler of lanes to be represented
 	 *
 	 */
 	public ControlDesk(int numLanes) {
@@ -60,10 +62,8 @@ public class ControlDesk extends Observable implements Runnable {
 	private Bowler registerPatron(String nickName) {
 		Bowler patron = null;
 		try {
-			patron = BowlerFile.getBowlerInfo(nickName);
-		} catch (FileNotFoundException e) {
-			System.err.println("Error..." + e);
-		} catch (IOException e) {
+			patron = BowlerDb.getBowlerInfo(nickName);
+		} catch (SQLException e) {
 			System.err.println("Error..." + e);
 		}
 		return patron;

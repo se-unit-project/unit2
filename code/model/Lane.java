@@ -1,5 +1,6 @@
 package model;
 
+import util.ScoreHistoryDb;
 import util.ScoreHistoryFile;
 
 import java.util.*;
@@ -68,7 +69,7 @@ public class Lane extends Observable implements Observer, Runnable {
 						try{
 							Date date = new Date();
 							String dateString = "" + date.getHours() + ":" + date.getMinutes() + " " + date.getMonth() + "/" + date.getDay() + "/" + (date.getYear() + 1900);
-							ScoreHistoryFile.addScore(currentThrower.getNickName(), dateString, new Integer(cumulScores[bowlIndex][9]).toString());
+							ScoreHistoryDb.addScore(currentThrower.getNickName(), dateString, new Integer(cumulScores[bowlIndex][9]).toString());
 						} catch (Exception e) {System.err.println("Exception in addScore. "+ e );}
 					}
 					setter.reset();

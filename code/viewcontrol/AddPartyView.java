@@ -26,6 +26,7 @@ package viewcontrol;/* viewcontrol.AddPartyView.java
  */
 
 import model.Bowler;
+import util.BowlerDb;
 import util.BowlerFile;
 
 import java.awt.*;
@@ -85,7 +86,7 @@ public class AddPartyView implements ActionListener, ListSelectionListener {
 		bowlerPanel.setBorder(new TitledBorder("Bowler Database"));
 
 		try {
-			bowlerdb = new Vector(BowlerFile.getBowlers());
+			bowlerdb = new Vector(BowlerDb.getBowlers());
 		} catch (Exception e) {
 			System.err.println("File Error");
 			bowlerdb = new Vector();
@@ -204,10 +205,10 @@ public class AddPartyView implements ActionListener, ListSelectionListener {
 	 */
 	public void updateNewPatron(NewPatronView newPatron) {
 		try {
-			Bowler checkBowler = BowlerFile.getBowlerInfo( newPatron.getNick() );
+			Bowler checkBowler = BowlerDb.getBowlerInfo( newPatron.getNick() );
 			if ( checkBowler == null ) {
-				BowlerFile.storeBowlerInfo(new Bowler(newPatron.getNick(),newPatron.getFull(),newPatron.getEmail()));
-				bowlerdb = new Vector(BowlerFile.getBowlers());
+				BowlerDb.storeBowlerInfo(new Bowler(newPatron.getNick(),newPatron.getFull(),newPatron.getEmail()));
+				bowlerdb = new Vector(BowlerDb.getBowlers());
 				allBowlers.setListData(bowlerdb);
 				party.add(newPatron.getNick());
 				partyList.setListData(party);

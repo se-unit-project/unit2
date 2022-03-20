@@ -6,7 +6,9 @@ package viewcontrol;/* ShowScore.java
  */
 
 import model.Score;
+import util.BowlerDb;
 import util.BowlerFile;
+import util.ScoreHistoryDb;
 import util.ScoreHistoryFile;
 
 import javax.swing.*;
@@ -40,7 +42,7 @@ public class ShowScores implements ActionListener, ListSelectionListener {
         {   
             Vector scores = null;
             try {
-                scores = ScoreHistoryFile.getScores(nick);
+                scores = ScoreHistoryDb.getScores(nick);
             } catch (Exception e) {
                 System.err.println("Error: " + e);
             }
@@ -65,7 +67,7 @@ public class ShowScores implements ActionListener, ListSelectionListener {
         {
             Vector scores = null;
             try {
-                scores = ScoreHistoryFile.getScores(nick);
+                scores = ScoreHistoryDb.getScores(nick);
             } catch (Exception e) {
                 System.err.println("Error: " + e);
             }
@@ -91,7 +93,7 @@ public class ShowScores implements ActionListener, ListSelectionListener {
         
         Vector scores = null;
             try {
-                scores = ScoreHistoryFile.getScores(nick);
+                scores = ScoreHistoryDb.getScores(nick);
             } catch (Exception e) {
                 System.err.println("Error: " + e);
             }
@@ -116,7 +118,7 @@ public class ShowScores implements ActionListener, ListSelectionListener {
     public Vector<String> getScorer(String nick){
     	Vector scores = null;
         try {
-            scores = ScoreHistoryFile.getScores(nick);
+            scores = ScoreHistoryDb.getScores(nick);
         } catch (Exception e) {
             System.err.println("Error: " + e);
         }
@@ -239,7 +241,7 @@ public class ShowScores implements ActionListener, ListSelectionListener {
         bowlerPanel.setBorder(new TitledBorder("Player List"));
 
         try {
-            bowlerdb = new Vector(BowlerFile.getBowlers());
+            bowlerdb = new Vector(BowlerDb.getBowlers());
         } catch (Exception e) {
             System.err.println("File Error");
             bowlerdb = new Vector();
