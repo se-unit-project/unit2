@@ -7,7 +7,6 @@ package util;
 
 import model.Bowler;
 import model.Score;
-import util.ScoreHistoryFile;
 import model.ShareReport;
 
 import java.io.*;

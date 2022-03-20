@@ -1,7 +1,6 @@
 package model;
 
 import util.ScoreHistoryDb;
-import util.ScoreHistoryFile;
 
 import java.util.*;
 

@@ -7,9 +7,7 @@ package viewcontrol;/* ShowScore.java
 
 import model.Score;
 import util.BowlerDb;
-import util.BowlerFile;
 import util.ScoreHistoryDb;
-import util.ScoreHistoryFile;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
