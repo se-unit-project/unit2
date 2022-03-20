@@ -10,9 +10,12 @@ import model.Party;
 
 import java.awt.*;
 import java.awt.event.*;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.*;
 
 public class LaneView implements ActionListener, Observer {
@@ -29,11 +32,15 @@ public class LaneView implements ActionListener, Observer {
 	JPanel[][] scores;
 	JLabel[][] scoreLabel;
 	JLabel[][] emojiLable;
+	JLabel envyEmojiLabel;
+	JLabel embarrassedEmojiLabel;
+	JLabel appreicateEmojiLabel;
 	JPanel[][] ballGrid;
 	JPanel[] pins;
+	JPanel panel;
 	JButton maintenance;
 	Lane lane;
-
+	int finalScore;
 	public LaneView(Lane lane, int laneNum) {
 
 		this.lane = lane;
@@ -59,7 +66,7 @@ public class LaneView implements ActionListener, Observer {
 	private JPanel makeFrame(Party party) {
 		bowlers = party.getMembers();
 		int numBowlers = bowlers.size();
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setLayout(new GridLayout(0, 1));
 		balls = new JPanel[numBowlers][NUM_OF_TRIES];
 		ballLabel = new JLabel[numBowlers][NUM_OF_TRIES];
@@ -79,7 +86,24 @@ public class LaneView implements ActionListener, Observer {
 				balls[i][j].add(ballLabel[i][j]);
 			}
 		}
-
+		try{
+//			System.out.println("Working Directory = " + System.getProperty("user.dir"));
+			BufferedImage envy = ImageIO.read(new File("envy.jpg"));
+			envyEmojiLabel = new JLabel(new ImageIcon(envy));
+			envyEmojiLabel.setSize(10, 10);
+			
+			BufferedImage embarrassed = ImageIO.read(new File("embarrassed.jpg"));
+			embarrassedEmojiLabel = new JLabel(new ImageIcon(embarrassed));
+			embarrassedEmojiLabel.setSize(10, 10);
+			
+			BufferedImage appreicate = ImageIO.read(new File("appreciate.jpeg"));
+			appreicateEmojiLabel = new JLabel(new ImageIcon(appreicate));
+			appreicateEmojiLabel.setSize(10, 10);
+			
+		}
+		catch(Exception e){
+			System.out.println("Error loading emoji");
+		}
 		for (int i = 0; i != numBowlers; i++) {
 			for (int j = 0; j != LAST_ROUND; j++) {
 				ballGrid[i][j] = new JPanel();
@@ -168,6 +192,7 @@ public class LaneView implements ActionListener, Observer {
 			for (int k = 0; k < numBowlers; k++) {
 				for (int i = 0; i <= le.getFrameNumber() - 1; i++) {
 					if (lescores[k][i] != 0){
+						finalScore = lescores[k][i];
 						this.scoreLabel[k][i].setText((new Integer(lescores[k][i])).toString());
 						int prev = i>0 ? lescores[k][i-1] : 0;
 						int diff = Math.abs(lescores[k][i] - prev);
@@ -201,9 +226,22 @@ public class LaneView implements ActionListener, Observer {
 				}
 
 			}
+			
 		}
 		else{
 			initDone = false;
+			System.out.println(finalScore);
+			if(finalScore < 100)
+				panel.add(embarrassedEmojiLabel);
+			else if(finalScore < 120)
+				panel.add(envyEmojiLabel);
+			else
+				panel.add(appreicateEmojiLabel);
+			panel.repaint();
+			cpanel.removeAll();
+			cpanel.add(panel, "Center");
+			frame.pack();
+			cpanel.setVisible(true);
 		}
 	}
 }
