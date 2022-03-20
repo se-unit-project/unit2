@@ -88,15 +88,15 @@ public class LaneView implements ActionListener, Observer {
 		}
 		try{
 //			System.out.println("Working Directory = " + System.getProperty("user.dir"));
-			BufferedImage envy = ImageIO.read(new File("envy.jpg"));
+			BufferedImage envy = ImageIO.read(new File("static/envy.jpg"));
 			envyEmojiLabel = new JLabel(new ImageIcon(envy));
 			envyEmojiLabel.setSize(10, 10);
 			
-			BufferedImage embarrassed = ImageIO.read(new File("embarrassed.jpg"));
+			BufferedImage embarrassed = ImageIO.read(new File("static/embarrassed.jpg"));
 			embarrassedEmojiLabel = new JLabel(new ImageIcon(embarrassed));
 			embarrassedEmojiLabel.setSize(10, 10);
 			
-			BufferedImage appreicate = ImageIO.read(new File("appreciate.jpeg"));
+			BufferedImage appreicate = ImageIO.read(new File("static/appreciate.jpeg"));
 			appreicateEmojiLabel = new JLabel(new ImageIcon(appreicate));
 			appreicateEmojiLabel.setSize(10, 10);
 			
