@@ -28,6 +28,7 @@ public class LaneView implements ActionListener, Observer {
 	JLabel[][] ballLabel;
 	JPanel[][] scores;
 	JLabel[][] scoreLabel;
+	JLabel[][] emojiLable;
 	JPanel[][] ballGrid;
 	JPanel[] pins;
 	JButton maintenance;
@@ -65,6 +66,7 @@ public class LaneView implements ActionListener, Observer {
 
 		scores = new JPanel[numBowlers][NUM_OF_ROUNDS];
 		scoreLabel = new JLabel[numBowlers][NUM_OF_ROUNDS];
+		emojiLable = new JLabel[numBowlers][NUM_OF_ROUNDS];
 		ballGrid = new JPanel[numBowlers][NUM_OF_ROUNDS];
 		pins = new JPanel[numBowlers];
 
@@ -103,11 +105,13 @@ public class LaneView implements ActionListener, Observer {
 			for (int k = 0; k != NUM_OF_ROUNDS; k++) {
 				scores[i][k] = new JPanel();
 				scoreLabel[i][k] = new JLabel("  ", SwingConstants.CENTER);
+				emojiLable[i][k] = new JLabel("  ", SwingConstants.CENTER);
 				scores[i][k].setBorder(
 						BorderFactory.createLineBorder(Color.BLACK));
 				scores[i][k].setLayout(new GridLayout(0, 1));
 				scores[i][k].add(ballGrid[i][k], BorderLayout.EAST);
 				scores[i][k].add(scoreLabel[i][k], BorderLayout.SOUTH);
+				scores[i][k].add(emojiLable[i][k], BorderLayout.SOUTH);
 				pins[i].add(scores[i][k], BorderLayout.EAST);
 			}
 			panel.add(pins[i]);
@@ -165,6 +169,17 @@ public class LaneView implements ActionListener, Observer {
 				for (int i = 0; i <= le.getFrameNumber() - 1; i++) {
 					if (lescores[k][i] != 0){
 						this.scoreLabel[k][i].setText((new Integer(lescores[k][i])).toString());
+						int prev = i>0 ? lescores[k][i-1] : 0;
+						int diff = Math.abs(lescores[k][i] - prev);
+						if(diff < 7){
+							this.emojiLable[k][i].setText(new String(Character.toChars(0x1F633)));
+						}else if(diff < 9){
+							this.emojiLable[k][i].setText(new String(Character.toChars(0x1F609)));
+						}
+						else {
+							this.emojiLable[k][i].setText(new String(Character.toChars(0x1F60E)));
+						}
+
 					}
 				}
 
