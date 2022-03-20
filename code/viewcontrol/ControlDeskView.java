@@ -61,12 +61,12 @@ public class ControlDeskView implements ActionListener, Observer {
 		addPartyPanel.add(addParty);
 		controlsPanel.add(addPartyPanel);
 
-//		showScore = new JButton("Show Scores");
-//		JPanel showScorePanel = new JPanel();
-//		showScorePanel.setLayout(new FlowLayout());
-//		showScore.addActionListener(this);
-//		showScorePanel.add(showScore);
-//		controlsPanel.add(showScorePanel);
+		showScore = new JButton("Show Scores");
+		JPanel showScorePanel = new JPanel();
+		showScorePanel.setLayout(new FlowLayout());
+		showScore.addActionListener(this);
+		showScorePanel.add(showScore);
+		controlsPanel.add(showScorePanel);
 
 		assign = new JButton("Assign Lanes");
 		JPanel assignPanel = new JPanel();
@@ -148,9 +148,9 @@ public class ControlDeskView implements ActionListener, Observer {
 		if (e.getSource().equals(addParty)) {
 			AddPartyView addPartyWin = new AddPartyView(this, maxMembers);
 		}
-//		if (e.getSource().equals(showScore)) {
-//            ShowScores showScoreWin = new ShowScores();
-//        }
+		if (e.getSource().equals(showScore)) {
+            ShowScores showScoreWin = new ShowScores();
+        }
 		if (e.getSource().equals(assign)) {
 			controlDesk.assignLane();
 		}
