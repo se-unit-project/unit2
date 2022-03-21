@@ -9,11 +9,11 @@ public class ScoreCalculator {
 	}
 
 	protected void calculateGame(int[] bowlersScores, int bowlerIndex, int frameNumber, int roll, int pinsDown) {
-		int currentRoll = (2 * frameNumber) + roll;
-		if(frameNumber == 10){
-			currentRoll = (2 * frameNumber) + roll + 1;
-		}
-
+//		int currentRoll = (2 * frameNumber) + roll;
+//		if(frameNumber == 10){
+//			currentRoll = (2 * frameNumber) + roll + 1;
+//		}
+		int currentRoll = (frameNumber==10)?((2 * frameNumber) + roll + 1):((2 * frameNumber) + roll);
 		// Reset the previous record of scores
 		for (int i = 0; i < cumulScores[bowlerIndex].length; i++) {
 			cumulScores[bowlerIndex][i] = 0;
