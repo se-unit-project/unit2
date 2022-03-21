@@ -1,6 +1,7 @@
 package model;
 
 import util.ScoreHistoryDb;
+import viewcontrol.ControlDeskView;
 
 import java.util.*;
 
@@ -23,6 +24,13 @@ public class Lane extends Observable implements Observer, Runnable {
 	private int gameNumber;
 	private Bowler currentThrower;			// = the thrower who just took a throw
 	private ScoreCalculator sc;
+	private boolean extraChance;
+	private int framesAllowed = 9;
+
+	private int highestPlayer;
+	private int secondHighestPlayer;
+	private boolean tieBreakerAllowed = true;
+
 
 	/** model.Lane()
 	 *
@@ -38,8 +46,74 @@ public class Lane extends Observable implements Observer, Runnable {
 		this.gameIsHalted = false;
 		this.partyAssigned = false;
 		this.gameNumber = 0;
+//		this.framesAllowed = 9;
 		(new Thread(this, "Lane Thread")).start();
 	}
+
+	public Lane(int f){
+		this();
+		this.extraChance = false;
+		framesAllowed = f-1;
+		this.tieBreakerAllowed = false;
+	}
+
+	private void handleEndGame() {
+
+		int totalBowlers = party.getMembers().size();
+		int max = 0, smax = 0, sind = 0, find = 0, i;
+
+		// findSecondHighestPlayer()
+		for(i=0; i<totalBowlers; i++) {
+			if(cumulScores[i][9]>max) {
+				smax = max;
+				sind = find;
+				max = cumulScores[i][9];
+				find = i;
+			}
+			else if(cumulScores[i][9]>smax) {
+				smax = cumulScores[i][9];
+				sind = i;
+			}
+		}
+
+		highestPlayer = find;
+		secondHighestPlayer = sind;
+
+		extraChance = true;
+		for(i=0; i<sind; i++) {
+			currentThrower = (Bowler)bowlerIterator.next();
+		}
+		// setter.ballThrown();
+		Random rand = new Random();
+		int randomNum = rand.nextInt((10 - 5) + 1) + 5;
+		handleExtraChance(randomNum);
+	}
+
+	private void handleExtraChance(int pinsDown) {
+		int highestScore = cumulScores[highestPlayer][9];
+		int secondHighestScore = cumulScores[secondHighestPlayer][9] + pinsDown;
+
+
+		if(highestScore <= secondHighestScore+50) {
+			Vector bowlers = new Vector(party.getMembers());
+			Vector partyNicks = new Vector();
+			partyNicks.add(((Bowler) bowlers.get(highestPlayer)).getNickName());
+			partyNicks.add(((Bowler) bowlers.get(secondHighestPlayer)).getNickName());
+
+
+			ControlDesk newControlDesk = new ControlDesk(1, 3);
+			ControlDeskView newCDV = new ControlDeskView( newControlDesk, 2);
+//			newControlDesk.subscribe( newCDV );
+
+			newControlDesk.addPartyQueue(partyNicks);
+		} else {
+			System.out.println("The second highest player is not able to cross the highest player");
+			System.out.println("So the game ends here");
+		}
+		return ;
+	}
+
+
 
 	/** run()
 	 *
@@ -58,13 +132,22 @@ public class Lane extends Observable implements Observer, Runnable {
 					canThrowAgain = true;
 					tenthFrameStrike = false;
 					ball = 0;
-
+//					if(signal==1)
+//					{
+//
+//						publish(lanePublish());
+//						signal = 0;
+//						resetBowlerIterator();
+//						ball = 0;
+//						bowlIndex = 0;
+//						continue;
+//					}
 					while (canThrowAgain) {
 						setter.ballThrown();		// simulate the thrower's ball hiting
 						ball++;
 					}
 
-					if (frameNumber == 9){
+					if (frameNumber == framesAllowed){
 						try{
 							Date date = new Date();
 							String dateString = "" + date.getHours() + ":" + date.getMinutes() + " " + date.getMonth() + "/" + date.getDay() + "/" + (date.getYear() + 1900);
@@ -78,7 +161,7 @@ public class Lane extends Observable implements Observer, Runnable {
 					frameNumber++;
 					resetBowlerIterator();
 					bowlIndex = 0;
-					if (frameNumber > 9) {
+					if (frameNumber > framesAllowed) {
 						publish();
 						gameFinished = true;
 						gameNumber++;
@@ -86,6 +169,10 @@ public class Lane extends Observable implements Observer, Runnable {
 				}
 			}
 			else if (partyAssigned && gameFinished) {
+				if(tieBreakerAllowed){
+					handleEndGame();
+					tieBreakerAllowed = false;
+				}
 				publish();
 			}
 			try {

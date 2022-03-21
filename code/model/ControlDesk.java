@@ -36,6 +36,17 @@ public class ControlDesk extends Observable implements Runnable {
 		(new Thread(this, "Control Desk Thread")).start();
 	}
 
+	public ControlDesk(int numLanes, int j) {
+		this.numLanes = numLanes;
+		lanes = new HashSet<>(numLanes);
+		partyQueue = new Queue();
+		for (int i = 0; i < numLanes; i++) {
+			lanes.add(new Lane(j));
+		}
+		(new Thread(this, "Control Desk Thread")).start();
+
+	}
+
 	/**
 	 * Main loop for model.ControlDesk's thread
 	 * 

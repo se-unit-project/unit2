@@ -11,7 +11,6 @@ import model.Party;
 import java.awt.*;
 import java.awt.event.*;
 import javax.imageio.ImageIO;
-import javax.naming.spi.DirStateFactory.Result;
 import javax.swing.*;
 
 
@@ -25,8 +24,8 @@ public class LaneView implements ActionListener, Observer {
 	public static final int NUM_OF_ROUNDS = 10;
 	public static final int LAST_ROUND = 9;
 	private boolean initDone = false;
-	String winner;
-	int restult=0;
+	String winner = "";
+	int result =0;
 	JFrame frame;
 	Container cpanel;
 	Vector bowlers;
@@ -217,8 +216,8 @@ public class LaneView implements ActionListener, Observer {
 
 					}
 				}
-				if(finalScore > restult){
-					restult = finalScore;
+				if(finalScore > result){
+					result = finalScore;
 					winner = ((Bowler)bowlers.get(k)).getNickName();
 				}
 				for (int i = 0; i < 21; i++) {
@@ -243,14 +242,14 @@ public class LaneView implements ActionListener, Observer {
 		}
 		else{
 			initDone = false;
-			System.out.println(restult);
+			System.out.println(result);
 			winnerLabel = new JLabel("Winner: " + winner);
 			winnerLabel.setFont(new Font("Serif", Font.BOLD, 20));
 			winnerLabel.setHorizontalAlignment(JLabel.CENTER);
 			panel.add(winnerLabel, BorderLayout.NORTH);
-			if(restult < 100)
+			if(result < 100)
 				panel.add(embarrassedEmojiLabel);
-			else if(restult < 120)
+			else if(result < 120)
 				panel.add(envyEmojiLabel);
 			else
 				panel.add(appreicateEmojiLabel);
