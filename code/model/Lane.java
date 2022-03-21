@@ -4,6 +4,8 @@ import util.ScoreHistoryDb;
 
 import java.util.*;
 
+import static java.lang.Thread.sleep;
+
 public class Lane extends Observable implements Observer, Runnable {
 
 	public static final int NUMBER_OF_PINS = 10;
@@ -23,6 +25,11 @@ public class Lane extends Observable implements Observer, Runnable {
 	private int gameNumber;
 	private Bowler currentThrower;			// = the thrower who just took a throw
 	private ScoreCalculator sc;
+	private Integer angle;
+	public boolean waitingForThrow;
+	private int signal;
+
+
 
 	/** model.Lane()
 	 *
@@ -38,6 +45,7 @@ public class Lane extends Observable implements Observer, Runnable {
 		this.gameIsHalted = false;
 		this.partyAssigned = false;
 		this.gameNumber = 0;
+		signal = 1;
 		(new Thread(this, "Lane Thread")).start();
 	}
 
@@ -50,7 +58,7 @@ public class Lane extends Observable implements Observer, Runnable {
 			if (partyAssigned && !gameFinished) {	// we have a party on this lane, so next bower can take a throw
 				while (gameIsHalted) {
 					try {
-						Thread.sleep(NUMBER_OF_PINS);
+						sleep(NUMBER_OF_PINS);
 					} catch (Exception e) {}
 				}
 				if (bowlerIterator.hasNext()) {
@@ -58,10 +66,27 @@ public class Lane extends Observable implements Observer, Runnable {
 					canThrowAgain = true;
 					tenthFrameStrike = false;
 					ball = 0;
+					if(signal==1)
+					{
+
+						publish();
+						signal = 0;
+						resetBowlerIterator();
+						ball = 0;
+						bowlIndex = 0;
+						continue;
+					}
 
 					while (canThrowAgain) {
+						while(waitingForThrow)
+						{
+							try {
+								sleep(2);
+							} catch(Exception e) {}
+						}
 						setter.ballThrown();		// simulate the thrower's ball hiting
 						ball++;
+						waitForThrow();
 					}
 
 					if (frameNumber == 9){
@@ -89,7 +114,7 @@ public class Lane extends Observable implements Observer, Runnable {
 				publish();
 			}
 			try {
-				Thread.sleep(NUMBER_OF_PINS);
+				sleep(NUMBER_OF_PINS);
 			} catch (Exception e) {}
 		}
 	}
@@ -296,11 +321,26 @@ public class Lane extends Observable implements Observer, Runnable {
 					tenthFrameStrike = true;
 				}
 			}
-			if ((pe.totalPinsDown() != NUMBER_OF_PINS) && (pe.getThrowNumber() == 2 && tenthFrameStrike == false) || pe.getThrowNumber() == 3) {
+			if ((pe.totalPinsDown() != NUMBER_OF_PINS) && (pe.getThrowNumber() == 2 && tenthFrameStrike == false)
+					|| pe.getThrowNumber() == 3) {
 				canThrowAgain = false;
 			}
 		} else if (pe.pinsDownOnThisThrow() == NUMBER_OF_PINS || pe.getThrowNumber() == 2) {		// threw a strike
 			canThrowAgain = false;
 		}
 	}
+
+	public void setAngle(Integer ang) {
+		angle = ang;
+	}
+
+	public void throwBall() {
+		waitingForThrow = false;
+	}
+
+	public void waitForThrow() {
+		waitingForThrow = true;
+	}
+
+
 }

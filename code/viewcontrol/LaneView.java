@@ -19,7 +19,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.*;
 
-public class LaneView implements ActionListener, Observer {
+
+public class LaneView extends Thread implements ActionListener, Observer {
 
 	public static final int NUM_OF_TRIES = 23;
 	public static final int NUM_OF_ROUNDS = 10;
@@ -42,9 +43,15 @@ public class LaneView implements ActionListener, Observer {
 	JPanel[][] ballGrid;
 	JPanel[] pins;
 	JPanel panel;
-	JButton maintenance,throwButton;
+	JButton maintenance, throwButton;
 	Lane lane;
 	int finalScore;
+	Integer angle;
+	Boolean visible;
+	JLabel angleLabel;
+	Integer cycle;
+
+
 	public LaneView(Lane lane, int laneNum) {
 
 		this.lane = lane;
@@ -56,7 +63,37 @@ public class LaneView implements ActionListener, Observer {
 				frame.hide();
 			}
 		});
+
+		angle = 0;
+		cycle = 1;
+		visible = false;
 		cpanel.add(new JPanel());
+		this.start();
+
+	}
+
+	public void run()
+	{
+		while(true)
+		{
+
+			try {
+				sleep(200);
+			}catch(Exception e) {}
+			angle += 5*cycle;
+			if(angle>90)
+			{
+				angle = 90;
+				cycle *= -1;
+			}
+			if(angle<-90)
+			{
+				angle = -90;
+				cycle*=-1;
+			}
+			if(visible)
+				angleLabel.setText("Throw Angle: "+Integer.toString(angle)+"\u00B0");
+		}
 	}
 
 	public void show() {
@@ -149,10 +186,6 @@ public class LaneView implements ActionListener, Observer {
 		return panel;
 	}
 
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource().equals(maintenance)) lane.pauseGame();
-	}
-
 	@Override
 	public void update(Observable o, Object arg) {		
 		if(!(o instanceof Lane)) return;
@@ -164,7 +197,7 @@ public class LaneView implements ActionListener, Observer {
 				cpanel.removeAll();
 				cpanel.add(makeFrame(le.getParty()), "Center");
 			}
-			
+
 			int numBowlers = le.getParty().getMembers().size();
 		
 			if (le.getFrameNumber() == 0 && le.getBall() == 0 && le.getBowlIndex() == 0) {
@@ -189,6 +222,9 @@ public class LaneView implements ActionListener, Observer {
 				throwButton.addActionListener(this);
 				throwPanel.add(throwButton);
 				buttonPanel.add(throwPanel);
+
+//				Insets buttonMargin = new Insets(4, 4, 4, 4);
+//				angleLabel = new JLabel(Integer.toString(angle));
 
 				cpanel.add(buttonPanel, "South");
 
@@ -261,4 +297,16 @@ public class LaneView implements ActionListener, Observer {
 			cpanel.setVisible(true);
 		}
 	}
+
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource().equals(maintenance)) {
+			lane.pauseGame();
+		}
+		if (e.getSource().equals(throwButton)) {
+			System.out.println("Throw Ball");
+			lane.setAngle(angle);
+			lane.throwBall();
+		}
+	}
+
 }
