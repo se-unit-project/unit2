@@ -24,6 +24,8 @@ public class LaneView implements ActionListener, Observer {
 	public static final int NUM_OF_ROUNDS = 10;
 	public static final int LAST_ROUND = 9;
 	private boolean initDone = false;
+	String winner;
+	int result =0;
 	JFrame frame;
 	Container cpanel;
 	Vector bowlers;
@@ -35,10 +37,11 @@ public class LaneView implements ActionListener, Observer {
 	JLabel envyEmojiLabel;
 	JLabel embarrassedEmojiLabel;
 	JLabel appreicateEmojiLabel;
+	JLabel winnerLabel;
 	JPanel[][] ballGrid;
 	JPanel[] pins;
 	JPanel panel;
-	JButton maintenance;
+	JButton maintenance,throwButton;
 	Lane lane;
 	int finalScore;
 	public LaneView(Lane lane, int laneNum) {
@@ -177,8 +180,14 @@ public class LaneView implements ActionListener, Observer {
 				maintenancePanel.setLayout(new FlowLayout());
 				maintenance.addActionListener(this);
 				maintenancePanel.add(maintenance);
-
 				buttonPanel.add(maintenancePanel);
+
+				throwButton = new JButton("Throw");
+				JPanel throwPanel = new JPanel();
+				throwPanel.setLayout(new FlowLayout());
+				throwButton.addActionListener(this);
+				throwPanel.add(throwButton);
+				buttonPanel.add(throwPanel);
 
 				cpanel.add(buttonPanel, "South");
 
@@ -207,7 +216,10 @@ public class LaneView implements ActionListener, Observer {
 
 					}
 				}
-
+				if(finalScore > result){
+					result = finalScore;
+					winner = ((Bowler)bowlers.get(k)).getNickName();
+				}
 				for (int i = 0; i < 21; i++) {
 					if (((int[]) (scores.get(bowlers.get(k))))[i] != -1){
 						if (((int[]) scores.get(bowlers.get(k)))[i] == NUM_OF_ROUNDS && (i % 2 == 0 || i == 19)){
@@ -230,10 +242,14 @@ public class LaneView implements ActionListener, Observer {
 		}
 		else{
 			initDone = false;
-			System.out.println(finalScore);
-			if(finalScore < 100)
+			System.out.println(result);
+			winnerLabel = new JLabel("Winner: " + winner);
+			winnerLabel.setFont(new Font("Serif", Font.BOLD, 20));
+			winnerLabel.setHorizontalAlignment(JLabel.CENTER);
+			panel.add(winnerLabel, BorderLayout.NORTH);
+			if(result < 100)
 				panel.add(embarrassedEmojiLabel);
-			else if(finalScore < 120)
+			else if(result < 120)
 				panel.add(envyEmojiLabel);
 			else
 				panel.add(appreicateEmojiLabel);
