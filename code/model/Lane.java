@@ -184,7 +184,7 @@ public class Lane extends Observable implements Observer, Runnable {
 				}
 			}
 			else if (partyAssigned && gameFinished) {
-				if(tieBreakerAllowed){
+				if(tieBreakerAllowed && party.getMembers().size() > 1){
 					handleEndGame();
 					tieBreakerAllowed = false;
 				}
